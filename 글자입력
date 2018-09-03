@@ -1,0 +1,45 @@
+package solo;
+
+//이름 입력 받기 
+import java.io.*;
+
+public class name_input {
+
+	public static void main(String[] args)throws IOException {
+		System.out.println("이름을 입력하시오 : ");
+		
+		
+		BufferedReader br=
+				new BufferedReader(new InputStreamReader(System.in));
+		
+		String str = br.readLine();
+		
+		System.out.println(str);
+		
+		
+		
+	System.out.println("==========================");
+	
+	
+	
+	//입력 받은 글자 5번 반복
+	
+	System.out.println("쓰고 싶은 말을 써보시오 : ");
+	
+	
+	BufferedReader br2 =
+			new BufferedReader(new InputStreamReader(System.in));
+	
+	String str2 = br2.readLine();
+	
+	System.out.println("입력하는 글자가 5번 반복 된다.");
+	
+	for(int i =1; i<=5; i++) {
+		
+		System.out.println(str2);
+	}
+				
+
+	}
+
+}
