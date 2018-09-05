@@ -1,0 +1,95 @@
+package burger_project1;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+
+
+
+public class BurgerInsert {
+
+	public static void main(String[] args) throws ClassNotFoundException {
+		
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			System.out.println(">> 드라이버로딩 성공");
+		} catch (ClassNotFoundException e) {
+			System.out.println("[예외] 드라이버로딩 실패!!!");
+			e.printStackTrace();
+		}
+		
+		//2. DB연결  - Connection 객체 생성 <-DriverManager
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(
+					"jdbc:oracle:thin:@203.236.209.174:1521:xe", 
+					"BURGER", "burger");
+			
+			System.out.println("연동 성공");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//3. prepareStatement 객체를 사용해서 SQL문 실행
+		PreparedStatement pstmt = null;
+		try {
+			
+			
+			//Scanner sc = new Scanner(System.in);
+			
+			String sql = "";
+			sql += "INSERT INTO BURGER";
+			sql += "       (BURGERID, BURGERNAME, PRICE) ";
+			sql += "VALUES (? ,? ,?)";
+			pstmt = conn.prepareStatement(sql);
+			
+			
+			
+			
+			////
+			int BURGERID = 12;
+			String BURGERNAME = "공룡버거";
+			int PRICE = 10000;
+
+			
+			pstmt.setInt(1,BURGERID);
+			pstmt.setString(2, BURGERNAME);
+			pstmt.setInt(3, PRICE);
+			
+			int result = pstmt.executeUpdate(sql);
+			
+			
+			//3-3 준비된 SQL문장 실행 처리
+			int cnt = pstmt.executeUpdate();
+			
+			//4. SQL 실행 결과에 대한 처리
+			System.out.println("처리건수: " + cnt);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//5. 클로징 처리에 의한 자원 반납
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}//main end
+
+}//class end
+
